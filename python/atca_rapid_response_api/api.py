@@ -53,6 +53,15 @@ class api:
         elif "authenticationTokenFile" in options:
             self.authenticationTokenFile = options['authenticationTokenFile']
 
+        # The name of the main target in the schedule.
+        self.nameTarget = None
+        if "nameTarget" in options:
+            self.nameTarget = options['nameTarget']
+        # And the first calibrator for that target.
+        self.nameCalibrator = None
+        if "nameCalibrator" in options:
+            self.nameCalibrator = options['nameCalibrator']
+            
     def __communications(self):
         # This session is how we communicate with the endpoint.
         session = Session()
@@ -97,14 +106,18 @@ class api:
         response = self.__communications()
         if response is None:
             raise preparationError("Could not get all information to send to server.")
-
+        
+        if "printSummary" not in options:
+            options['printSummary'] = False
+        
         # Go through the returned object and output a summary of what happened.
         if "authenticationToken" in response:
             authToken = response['authenticationToken']
             if "received" in authToken and "verified" in authToken:
-                print "Authentication token:"
-                print "            received: %r" % authToken['received']
-                print "            verified: %r" % authToken['verified']
+                if options['printSummary'] == True:
+                    print "Authentication token:"
+                    print "            received: %r" % authToken['received']
+                    print "            verified: %r" % authToken['verified']
             else:
                 raise responseError("Malformed authentication token response.")
         else:
@@ -115,9 +128,10 @@ class api:
         if "schedule" in response:
             schedule = response['schedule']
             if "received" in schedule and "valid" in schedule and "altered" in schedule:
-                print "Schedule file:"
-                print "     received: %r" % schedule['received']
-                print "        valid: %r" % schedule['valid']
+                if options['printSummary'] == True:
+                    print "Schedule file:"
+                    print "     received: %r" % schedule['received']
+                    print "        valid: %r" % schedule['valid']
                 if schedule['altered'] is not None:
                     # Write out the schedule.
                     if self.scheduleFile is not None:
@@ -126,9 +140,12 @@ class api:
                             with open(outFile, 'w') as of:
                                 of.write(outFile)
                         except IOError:
-                            print "      altered: %r (unable to be written to %s)" % (True, outFile)
+                            if options['printSummary'] == True:
+                                print "      altered: %r (unable to be written to %s)" % (True, outFile)
                         else:
-                            print "      altered: %r (written to %s)" % (True, outFile)
+                            if options['printSummary'] == True:
+                                print "      altered: %r (written to %s)" % (True, outFile)
+                            response['schedule']['filename'] = outFile
                     
             else:
                 raise responseError("Malformed schedule response.")
