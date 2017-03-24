@@ -61,6 +61,18 @@ class api:
         self.nameCalibrator = None
         if "nameCalibrator" in options:
             self.nameCalibrator = options['nameCalibrator']
+
+        # The email address of the requester. This has to be an email address
+        # that was supplied in the NAPA proposal.
+        self.email = None
+        if "email" in options:
+            self.email = options['email']
+
+        # The minimum amount of time that we require on the schedule for the
+        # observation to be useful. This should be given in hours.
+        self.minimumTime = None
+        if "minimumTime" in options:
+            self.minimumTime = options['minimumTime']
             
     def __communications(self):
         # This session is how we communicate with the endpoint.
@@ -109,8 +121,14 @@ class api:
         
         if "printSummary" not in options:
             options['printSummary'] = False
-        
+
+
         # Go through the returned object and output a summary of what happened.
+        # If there is ever an error, the 'error' parameter will be present in the
+        # returned JSON.
+        if "error" in response:
+            raise responseError(response['error'])
+
         if "authenticationToken" in response:
             authToken = response['authenticationToken']
             if "received" in authToken and "verified" in authToken:
