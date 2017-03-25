@@ -34,9 +34,10 @@ class api:
             self.scheduleFile = options['scheduleFile']
 
         # The location of the API endpoint.
-        self.serverProtocol = "https://"
-        self.serverName = "www.narrabri.atnf.csiro.au"
-        self.apiEndpoint = "/cgi-bin/rapid_response/rapid_response_service.py"
+        self.serverProtocol = "http://"
+#        self.serverName = "www.narrabri.atnf.csiro.au"
+        self.serverName = "localhost"
+        self.apiEndpoint = "/cgi-bin/rapid_response_service.py"
         if "serverProtocol" in options:
             self.serverProtocol = options['serverProtocol']
         if "serverName" in options:
@@ -142,7 +143,7 @@ class api:
             data['noScoreLimit'] = True
             if self.emailOnly != "":
                 data['emailOnly'] = self.emailOnly
-            if self.noEmail = True:
+            if self.noEmail == True:
                 data['noEmail'] = self.noEmail
         
         # Send the data.

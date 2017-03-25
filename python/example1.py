@@ -56,3 +56,28 @@ for i in xrange(0, 2):
 schedule.setLooping(False)
 
 # We need to turn this schedule into a string.
+schedString = schedule.toString()
+
+# We have our schedule now, so we need to craft the service request to submit it to
+# the rapid response service.
+rapidObj = { 'schedule': schedString }
+# The authentication token needs to go with it, and we point to the file that
+# contains the token.
+rapidObj['authenticationTokenFile'] = "/home/jstevens/usr/src/atca-rapid-response/token-generator/authorisation_C007_2016OCT.jwt"
+# The name of the main target needs to be specified.
+rapidObj['nameTarget'] = "magnetar"
+# The email address of the requester needs to be there.
+rapidObj['email'] = "Jamie.Stevens@csiro.au"
+
+# Because this is a test run, we'll specify a few parameters to just try things out.
+rapidObj['test'] = True
+rapidObj['emailOnly'] = "Jamie.Stevens@csiro.au"
+
+# Send the request.
+request = arrApi.api(rapidObj)
+try:
+    response = request.send()
+except arrApi.responseError as r:
+    print r.value
+
+    
