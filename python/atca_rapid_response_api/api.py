@@ -74,6 +74,29 @@ class api:
         if "minimumTime" in options:
             self.minimumTime = options['minimumTime']
             
+        # Some parameters relating to test mode.
+        self.test = False
+        if "test" in options:
+            self.test = options['test']
+        if self.test == True:
+            # We can specify other things to test now.
+            # Disable the check to see if this project has any time left to schedule.
+            self.noTimeLimit = False
+            if "noTimeLimit" in options:
+                self.noTimeLimit = options['noTimeLimit']
+            # Disable the check to see if we have a high-enough score.
+            self.noScoreLimit = False
+            if "noScoreLimit" in options:
+                self.noScoreLimit = options['noScoreLimit']
+            # Only send an email to a single email address.
+            self.emailOnly = ""
+            if "emailOnly" in options:
+                self.emailOnly = options['emailOnly']
+            # Disable sending an email completely.
+            self.noEmail = False
+            if "noEmail" in options:
+                self.noEmail = options['noEmail']
+            
     def __communications(self):
         # This session is how we communicate with the endpoint.
         session = Session()
@@ -104,7 +127,24 @@ class api:
                 return None
         if self.schedule is not None:
             data['schedule'] = self.schedule
+        # Send some metadata about the schedule.
+        data['nameTarget'] = self.nameTarget
+        data['nameCalibrator'] = self.nameCalibrator
+        data['minimumTime'] = self.minimumTime
 
+        # The email of the requester.
+        data['email'] = self.email
+
+        # Fill in stuff for test mode.
+        if self.test == True:
+            data['test'] = True
+            data['noTimeLimit'] = True
+            data['noScoreLimit'] = True
+            if self.emailOnly != "":
+                data['emailOnly'] = self.emailOnly
+            if self.noEmail = True:
+                data['noEmail'] = self.noEmail
+        
         # Send the data.
         url = self.serverProtocol + self.serverName + self.apiEndpoint
         postResponse = session.post( url=url, data=data )
