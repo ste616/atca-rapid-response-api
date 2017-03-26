@@ -147,10 +147,14 @@ class api:
                 data['noEmail'] = self.noEmail
         
         # Send the data.
+        print "sending the following data:"
+        print data
+        print " -- "
         url = self.serverProtocol + self.serverName + self.apiEndpoint
         postResponse = session.post( url=url, data=data )
 
         # Parse the JSON that comes back.
+        print postResponse.text
         response = json.loads(postResponse.text)
         return response
     

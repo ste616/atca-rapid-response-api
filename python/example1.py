@@ -66,6 +66,8 @@ rapidObj = { 'schedule': schedString }
 rapidObj['authenticationTokenFile'] = "/home/jstevens/usr/src/atca-rapid-response/token-generator/authorisation_C007_2016OCT.jwt"
 # The name of the main target needs to be specified.
 rapidObj['nameTarget'] = "magnetar"
+# So does the name of the calibrator.
+rapidObj['nameCalibrator'] = bestCal['calibrator'].getName()
 # The email address of the requester needs to be there.
 rapidObj['email'] = "Jamie.Stevens@csiro.au"
 
