@@ -74,6 +74,7 @@ rapidObj['email'] = "Jamie.Stevens@csiro.au"
 # Because this is a test run, we'll specify a few parameters to just try things out.
 rapidObj['test'] = True
 rapidObj['emailOnly'] = "Jamie.Stevens@csiro.au"
+rapidObj['noEmail'] = True
 
 # Send the request.
 request = arrApi.api(rapidObj)
