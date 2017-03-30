@@ -26,6 +26,9 @@ scan1 = schedule.addScan(
       'freq1': 5500, 'freq2': 9000, 'project': "C007",
       'scanLength': "00:20:00", 'scanType': "Dwell" }
 )
+# Since we definitely want to get onto source as quickly as possible, we tell the
+# library not to go to the calibrator first.
+schedule.disablePriorCalibration()
 
 # Request a list of nearby calibrators from the ATCA calibrator database.
 calList = scan1.findCalibrator()
@@ -74,7 +77,9 @@ rapidObj['email'] = "Jamie.Stevens@csiro.au"
 # Because this is a test run, we'll specify a few parameters to just try things out.
 rapidObj['test'] = True
 rapidObj['emailOnly'] = "Jamie.Stevens@csiro.au"
-rapidObj['noEmail'] = True
+rapidObj['noTimeLimit'] = True
+rapidObj['noScoreLimit'] = True
+#rapidObj['noEmail'] = True
 
 # Send the request.
 request = arrApi.api(rapidObj)

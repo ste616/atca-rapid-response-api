@@ -145,8 +145,8 @@ class api:
         # Fill in stuff for test mode.
         if self.test == True:
             data['test'] = True
-            data['noTimeLimit'] = True
-            data['noScoreLimit'] = True
+            data['noTimeLimit'] = self.noTimeLimit
+            data['noScoreLimit'] = self.noScoreLimit
             if self.emailOnly != "":
                 data['emailOnly'] = self.emailOnly
             if self.noEmail == True:
