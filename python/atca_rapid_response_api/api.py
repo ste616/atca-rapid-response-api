@@ -34,10 +34,9 @@ class api:
             self.scheduleFile = options['scheduleFile']
 
         # The location of the API endpoint.
-        self.serverProtocol = "http://"
-#        self.serverName = "www.narrabri.atnf.csiro.au"
-        self.serverName = "localhost"
-        self.apiEndpoint = "/cgi-bin/rapid_response_service.py"
+        self.serverProtocol = "https://"
+        self.serverName = "www.narrabri.atnf.csiro.au"
+        self.apiEndpoint = "/cgi-bin/obstools/rapid_response/rapid_response_service.py"
         if "serverProtocol" in options:
             self.serverProtocol = options['serverProtocol']
         if "serverName" in options:
@@ -74,6 +73,12 @@ class api:
         self.minimumTime = None
         if "minimumTime" in options:
             self.minimumTime = options['minimumTime']
+
+        # We need to be able to tell the system that we want to use the
+        # frequencies of whatever project we over-ride.
+        self.usePreviousFrequencies = False
+        if "usePreviousFrequencies" in options:
+            self.usePreviousFrequencies = options['usePreviousFrequencies']
             
         # Some parameters relating to test mode.
         self.test = False
@@ -132,7 +137,8 @@ class api:
         data['nameTarget'] = self.nameTarget
         data['nameCalibrator'] = self.nameCalibrator
         data['minimumTime'] = self.minimumTime
-
+        data['usePreviousFrequencies'] = self.usePreviousFrequencies
+        
         # The email of the requester.
         data['email'] = self.email
 

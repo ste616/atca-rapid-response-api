@@ -63,7 +63,7 @@ schedString = schedule.toString()
 rapidObj = { 'schedule': schedString }
 # The authentication token needs to go with it, and we point to the file that
 # contains the token.
-rapidObj['authenticationTokenFile'] = "/home/jstevens/usr/src/atca-rapid-response/token-generator/authorisation_C007_2016OCT.jwt"
+rapidObj['authenticationTokenFile'] = "authorisation_token_test_C007_2016OCT.jwt"
 # The name of the main target needs to be specified.
 rapidObj['nameTarget'] = "magnetar"
 # So does the name of the calibrator.
