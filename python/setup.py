@@ -6,7 +6,7 @@ from setuptools import setup
 # Jamie.Stevens@csiro.au
 
 setup(name='atca_rapid_response_api',
-      version='1.0',
+      version='1.1',
       description='ATCA Rapid Response Mode API',
       url='https://github.com/ste616/atca-rapid-response-api',
       author='Jamie Stevens',
@@ -19,3 +19,5 @@ setup(name='atca_rapid_response_api',
       zip_safe=False)
 
 # Changelog:
+# 2017-04-04: Prevented some SSL checks, because namoi's SSL is still a little
+#   flaky.
