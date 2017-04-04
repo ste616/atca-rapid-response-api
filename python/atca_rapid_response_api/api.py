@@ -3,6 +3,8 @@
 # Jamie.Stevens@csiro.au
 
 from requests import Session
+import requests
+requests.packages.urllib3.disable_warnings()
 import json
 
 # We have a couple of error classes here.
@@ -157,7 +159,7 @@ class api:
         print data
         print " -- "
         url = self.serverProtocol + self.serverName + self.apiEndpoint
-        postResponse = session.post( url=url, data=data )
+        postResponse = session.post( url=url, data=data, verify=False )
 
         # Parse the JSON that comes back.
         print postResponse.text
