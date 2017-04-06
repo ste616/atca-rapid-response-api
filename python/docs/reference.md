@@ -22,3 +22,12 @@ initialise the `api` class as:
 rapidRequest = arrApi.api(options)
 ```
 
+#### options dictionary
+
+The `options` dictionary has the following supported elements.
+
+##### schedule
+
+*This is a required property, although you may choose to
+specify `scheduleFile` instead.*
+
