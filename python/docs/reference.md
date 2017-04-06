@@ -24,7 +24,15 @@ rapidRequest = arrApi.api(options)
 
 #### options dictionary
 
-The `options` dictionary has the following supported elements.
+The `options` dictionary has the following supported properties.
+The properties are summarised in this table, and documented
+fully later on this page.
+
+| Property | Required? | Description |
+| --- | --- | --- |
+| `schedule` | Yes* | A string version of the CABB schedule |
+| `scheduleFile` | Yes* | The name of the file to read in as a CABB schedule |
+
 
 ##### schedule
 
