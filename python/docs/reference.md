@@ -30,8 +30,17 @@ fully later on this page.
 
 | Property | Required? | Description |
 | --- | --- | --- |
+| `apiEndpoint` | No | The location of the web service on the web server |
+| `authenticationToken` | Yes* | The token required to authenticate the request, as a string |
+| `authenticationTokenFile` | Yes* | The name of the file that contains the token required to authenticate the request |
+| `email` | Yes | The email address of the requester |
+| `minimumTime` | No | The minimum amount of time required for this request to be useful, in hours |
+| `nameCalibrator` | Yes | The name of a calibrator that is associated with the primary target |
+| `nameTarget` | Yes | The name of the source that is the primary target of the request |
 | `schedule` | Yes* | A string version of the CABB schedule |
 | `scheduleFile` | Yes* | The name of the file to read in as a CABB schedule |
+| `serverName` | No | The name of the webserver to use when sending the request to the web service |
+| `serverProtocol` | No | The protocol to use when sending the request to the web service |
 
 
 ##### schedule
