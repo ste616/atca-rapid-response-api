@@ -6,7 +6,7 @@ from setuptools import setup
 # Jamie.Stevens@csiro.au
 
 setup(name='atca_rapid_response_api',
-      version='1.1',
+      version='1.2',
       description='ATCA Rapid Response Mode API',
       url='https://github.com/ste616/atca-rapid-response-api',
       author='Jamie Stevens',
@@ -19,5 +19,7 @@ setup(name='atca_rapid_response_api',
       zip_safe=False)
 
 # Changelog:
-# 2017-04-04: Prevented some SSL checks, because namoi's SSL is still a little
+# 2017-04-04, v1.1: Prevented some SSL checks, because namoi's SSL is still a little
 #   flaky.
+# 2017-04-10, v1.2: Added the maximumLag option.
+

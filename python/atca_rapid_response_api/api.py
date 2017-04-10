@@ -75,7 +75,12 @@ class api:
         self.minimumTime = None
         if "minimumTime" in options:
             self.minimumTime = options['minimumTime']
-
+        # And the maximum amount of time in the future we will allow the
+        # start time to be, in hours.
+        self.maximumLag = None
+        if "maximumLag" in options:
+            self.maximumLag = options['maximumLag']
+            
         # We need to be able to tell the system that we want to use the
         # frequencies of whatever project we over-ride.
         self.usePreviousFrequencies = False
@@ -139,6 +144,8 @@ class api:
         data['nameTarget'] = self.nameTarget
         data['nameCalibrator'] = self.nameCalibrator
         data['minimumTime'] = self.minimumTime
+        if self.maximumLag is not None:
+            data['maximumLag'] = self.maximumLag
         data['usePreviousFrequencies'] = self.usePreviousFrequencies
         
         # The email of the requester.
