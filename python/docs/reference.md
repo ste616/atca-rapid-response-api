@@ -49,6 +49,14 @@ fully later on this page.
 | `test` | No | Set this to True to indicate that this is only a test request |
 | `usePreviousFrequencies` | No | A Boolean indicator of whether the service should try and schedule using the frequencies that were being used at the start time |
 
+##### apiEndpoint
+
+*This is an optional property.*
+
+**String**
+
+If you're submitting a request to the ATCA rapid response service, you probably don't
+want to change this parameter from the default value `/cgi-bin/obstools/rapid_response/rapid_response_service.py`.
 
 ##### schedule
 
