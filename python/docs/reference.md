@@ -61,7 +61,7 @@ want to change this parameter from the default value `/cgi-bin/obstools/rapid_re
 *This is a required property, although you may choose to
 specify `authenticationTokenFile` instead.* (**String**)
 
-This parameter needs to be filled with a [https://jwt.io] (JSON Web Token) string that the ATCA rapid response
+This parameter needs to be filled with a [JSON Web Token] (https://jwt.io) string that the ATCA rapid response
 service will recognise as a valid authentication token. You will have been supplied an authentication token
 by observatory staff, and this token must be passed back to the service.
 
@@ -74,10 +74,33 @@ token back by specifying the `authenticationTokenFile` parameter, rather than th
 specify `authenticationToken` instead.* (**String**)
 
 This parameter needs to be filled with the name of a readable file that contains a
-[https://jwt.io] (JSON Web Token) string that the ATCA rapid response service will recognise as a valid
+[JSON Web Token] (https://jwt.io) string that the ATCA rapid response service will recognise as a valid
 authentication token. You will have been supplied an authentication token file by observatory staff, and
 if you pass the name of that file to this parameter, the library will read in the file, and automatically fill the
 `authenticationToken` parameter with the string contained within.
+
+##### email
+
+*This is a required property.* (**String**)
+
+You must specify an email address, which the over-ride service will use when sending notifications.
+This email address must be one of those supplied on the OPAL proposal for your project. This
+parameter is more of a security check than a necessary address.
+
+##### emailOnly
+
+*This is an optional property, and is only used for test requests* (**String**)
+
+While you are testing your over-ride triggering software, you probably won't want to have emails sent to
+your entire team and the teams of those projects you would have displaced. Specify an email address in
+this parameter, and that will be the only address to receive any notifications from the over-ride
+service.
+
+##### maximumLag
+
+*This is an optional property.* (**Float**)
+
+
 
 ##### schedule
 
