@@ -34,13 +34,20 @@ fully later on this page.
 | `authenticationToken` | Yes* | The token required to authenticate the request, as a string |
 | `authenticationTokenFile` | Yes* | The name of the file that contains the token required to authenticate the request |
 | `email` | Yes | The email address of the requester |
+| `emailOnly` | No | Send all emails only to this email address **(test mode only)** |
+| `maximumLag` | No | The maximum time, in hours, that the service will schedule the start time from now |
 | `minimumTime` | No | The minimum amount of time required for this request to be useful, in hours |
 | `nameCalibrator` | Yes | The name of a calibrator that is associated with the primary target |
 | `nameTarget` | Yes | The name of the source that is the primary target of the request |
+| `noEmail` | No | Send no emails during the over-ride process **(test mode only)** |
+| `noScoreLimit` | No | Assume that we can over-ride any observation **(test mode only)** |
+| `noTimeLimit` | No | Assume that we can request an over-ride observation of any length **(test mode only)** |
 | `schedule` | Yes* | A string version of the CABB schedule |
 | `scheduleFile` | Yes* | The name of the file to read in as a CABB schedule |
 | `serverName` | No | The name of the webserver to use when sending the request to the web service |
 | `serverProtocol` | No | The protocol to use when sending the request to the web service |
+| `test` | No | Set this to True to indicate that this is only a test request |
+| `usePreviousFrequencies` | No | A Boolean indicator of whether the service should try and schedule using the frequencies that were being used at the start time |
 
 
 ##### schedule
