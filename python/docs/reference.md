@@ -51,12 +51,33 @@ fully later on this page.
 
 ##### apiEndpoint
 
-*This is an optional property.*
-
-**String**
+*This is an optional property.* (**String**)
 
 If you're submitting a request to the ATCA rapid response service, you probably don't
 want to change this parameter from the default value `/cgi-bin/obstools/rapid_response/rapid_response_service.py`.
+
+##### authenticationToken
+
+*This is a required property, although you may choose to
+specify `authenticationTokenFile` instead.* (**String**)
+
+This parameter needs to be filled with a [https://jwt.io] (JSON Web Token) string that the ATCA rapid response
+service will recognise as a valid authentication token. You will have been supplied an authentication token
+by observatory staff, and this token must be passed back to the service.
+
+Since the authentication token will have been supplied to you as a file, it is recommended that you pass the
+token back by specifying the `authenticationTokenFile` parameter, rather than this parameter.
+
+##### authenticationTokenFile
+
+*This is a required property, although you may choose to
+specify `authenticationToken` instead.* (**String**)
+
+This parameter needs to be filled with the name of a readable file that contains a
+[https://jwt.io] (JSON Web Token) string that the ATCA rapid response service will recognise as a valid
+authentication token. You will have been supplied an authentication token file by observatory staff, and
+if you pass the name of that file to this parameter, the library will read in the file, and automatically fill the
+`authenticationToken` parameter with the string contained within.
 
 ##### schedule
 
