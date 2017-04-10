@@ -61,7 +61,7 @@ want to change this parameter from the default value `/cgi-bin/obstools/rapid_re
 *This is a required property, although you may choose to
 specify `authenticationTokenFile` instead.* (**String**)
 
-This parameter needs to be filled with a [JSON Web Token] (https://jwt.io) string that the ATCA rapid response
+This parameter needs to be filled with a [JSON Web Token](https://jwt.io) string that the ATCA rapid response
 service will recognise as a valid authentication token. You will have been supplied an authentication token
 by observatory staff, and this token must be passed back to the service.
 
@@ -74,7 +74,7 @@ token back by specifying the `authenticationTokenFile` parameter, rather than th
 specify `authenticationToken` instead.* (**String**)
 
 This parameter needs to be filled with the name of a readable file that contains a
-[JSON Web Token] (https://jwt.io) string that the ATCA rapid response service will recognise as a valid
+[JSON Web Token](https://jwt.io) string that the ATCA rapid response service will recognise as a valid
 authentication token. You will have been supplied an authentication token file by observatory staff, and
 if you pass the name of that file to this parameter, the library will read in the file, and automatically fill the
 `authenticationToken` parameter with the string contained within.
