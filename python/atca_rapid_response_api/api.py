@@ -109,6 +109,10 @@ class api:
             self.noEmail = False
             if "noEmail" in options:
                 self.noEmail = options['noEmail']
+            # Limit the amount of time to test schedule shortening.
+            self.maxTime = None
+            if "maxTime" in options:
+                self.maxTime = options['maxTime']
             
     def __communications(self):
         # This session is how we communicate with the endpoint.
@@ -160,6 +164,8 @@ class api:
                 data['emailOnly'] = self.emailOnly
             if self.noEmail == True:
                 data['noEmail'] = self.noEmail
+            if self.maxTime is not None:
+                data['limitTimeHours'] = self.maxTime
         
         # Send the data.
         print "sending the following data:"

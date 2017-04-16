@@ -66,7 +66,7 @@ schedString = schedule.toString()
 rapidObj = { 'schedule': schedString }
 # The authentication token needs to go with it, and we point to the file that
 # contains the token.
-rapidObj['authenticationTokenFile'] = "authorisation_token_test_C007_2016OCT.jwt"
+rapidObj['authenticationTokenFile'] = "authorisation_token_C007_2017APR.jwt"
 # The name of the main target needs to be specified.
 rapidObj['nameTarget'] = "magnetar"
 # So does the name of the calibrator.
@@ -75,11 +75,14 @@ rapidObj['nameCalibrator'] = bestCal['calibrator'].getName()
 rapidObj['email'] = "Jamie.Stevens@csiro.au"
 # We want to use whatever frequencies are running at the time.
 rapidObj['usePreviousFrequencies'] = True
+# We only ask for times more than 0.2 hours.
+rapidObj['minimumTime'] = 0.2
 
 # Because this is a test run, we'll specify a few parameters to just try things out.
 rapidObj['test'] = True
 rapidObj['emailOnly'] = "Jamie.Stevens@csiro.au"
-rapidObj['noTimeLimit'] = True
+#rapidObj['noTimeLimit'] = True
+rapidObj['maxTime'] = 0.5
 rapidObj['noScoreLimit'] = True
 #rapidObj['noEmail'] = True
 
