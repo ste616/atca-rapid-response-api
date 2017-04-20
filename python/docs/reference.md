@@ -36,6 +36,7 @@ fully later on this page.
 | `email` | Yes | The email address of the requester |
 | `emailOnly` | No | Send all emails only to this email address **(test mode only)** |
 | `maximumLag` | No | The maximum time, in hours, that the service will schedule the start time from now |
+| `maxTime` | No | In testing mode, the maximum amount of time to allocate to this request, in hours |
 | `minimumTime` | No | The minimum amount of time required for this request to be useful, in hours |
 | `nameCalibrator` | Yes | The name of a calibrator that is associated with the primary target |
 | `nameTarget` | Yes | The name of the source that is the primary target of the request |
@@ -89,7 +90,7 @@ parameter is more of a security check than a necessary address.
 
 ##### emailOnly
 
-*This is an optional property, and is only used for test requests* (**String**)
+*This is an optional property, and is only used for test requests.* (**String**)
 
 While you are testing your over-ride triggering software, you probably won't want to have emails sent to
 your entire team and the teams of those projects you would have displaced. Specify an email address in
@@ -99,6 +100,48 @@ service.
 ##### maximumLag
 
 *This is an optional property.* (**Float**)
+
+By default, the rapid response service searches for a suitable start time for your schedule
+up to 100 hours from the request time. You may limit this search window by specifying here the
+maximum lag, in hours, you are interested in. This parameter is here primarily so you can tell
+the service not to bother scheduling the over-ride if it can't be done within the specified
+time frame.
+
+##### maxTime
+
+*This is an optional property, and is only used for test requests.* (**Float**)
+
+While you are testing, you may want to see what will happen if the service decides to automatically
+shorten your schedule. If you set this parameter, in hours, to a duration less than the total duration
+of your schedule, the service will need to shorten your schedule.
+
+##### minimumTime
+
+*This is an optional property.* (**Float**)
+
+You may specify here the minimum amount of time, in hours, that must be available to this request
+before the service will schedule it. If you don't specify this property, then the service will
+need to be able to allocate enough time to observe your entire schedule before it will schedule
+the start time (or as much time as you have left for your project allocation, whichever is smaller).
+
+##### nameCalibrator
+
+*This is a required property.* (**String**)
+
+You must specify the name of one calibrator associated with your target, as it appears in your
+schedule. This information is necessary so the service can shorten your schedule if required.
+
+##### nameTarget
+
+*This is a required property.* (**String**)
+
+You must specify the name of the target of your over-ride request, as it appears in your schedule.
+This information is necessary so it can ensure your target is above the horizon, and so the
+schedule can be appropriately shortened if required.
+
+##### noEmail
+
+*This is an optional property, and is only used for test requests.* (**Boolean**)
 
 
 
