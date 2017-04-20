@@ -28,27 +28,27 @@ The `options` dictionary has the following supported properties.
 The properties are summarised in this table, and documented
 fully later on this page.
 
-| Property | Required? | Description |
-| --- | --- | --- |
-| `apiEndpoint` | No | The location of the web service on the web server |
-| `authenticationToken` | Yes* | The token required to authenticate the request, as a string |
-| `authenticationTokenFile` | Yes* | The name of the file that contains the token required to authenticate the request |
-| `email` | Yes | The email address of the requester |
-| `emailOnly` | No | Send all emails only to this email address **(test mode only)** |
-| `maximumLag` | No | The maximum time, in hours, that the service will schedule the start time from now |
-| `maxTime` | No | In testing mode, the maximum amount of time to allocate to this request, in hours |
-| `minimumTime` | No | The minimum amount of time required for this request to be useful, in hours |
-| `nameCalibrator` | Yes | The name of a calibrator that is associated with the primary target |
-| `nameTarget` | Yes | The name of the source that is the primary target of the request |
-| `noEmail` | No | Send no emails during the over-ride process **(test mode only)** |
-| `noScoreLimit` | No | Assume that we can over-ride any observation **(test mode only)** |
-| `noTimeLimit` | No | Assume that we can request an over-ride observation of any length **(test mode only)** |
-| `schedule` | Yes* | A string version of the CABB schedule |
-| `scheduleFile` | Yes* | The name of the file to read in as a CABB schedule |
-| `serverName` | No | The name of the webserver to use when sending the request to the web service |
-| `serverProtocol` | No | The protocol to use when sending the request to the web service |
-| `test` | No | Set this to True to indicate that this is only a test request |
-| `usePreviousFrequencies` | No | A Boolean indicator of whether the service should try and schedule using the frequencies that were being used at the start time |
+| Property | Required? | Type | Description |
+| --- | --- | --- | --- |
+| `apiEndpoint` | No | String | The location of the web service on the web server |
+| `authenticationToken` | Yes* | String | The token required to authenticate the request, as a string |
+| `authenticationTokenFile` | Yes* | String | The name of the file that contains the token required to authenticate the request |
+| `email` | Yes | String | The email address of the requester |
+| `emailOnly` | No | String | Send all emails only to this email address **(test mode only)** |
+| `maximumLag` | No | Float | The maximum time, in hours, that the service will schedule the start time from now |
+| `maxTime` | No | Float | In testing mode, the maximum amount of time to allocate to this request, in hours |
+| `minimumTime` | No | Float | The minimum amount of time required for this request to be useful, in hours |
+| `nameCalibrator` | Yes | String | The name of a calibrator that is associated with the primary target |
+| `nameTarget` | Yes | String | The name of the source that is the primary target of the request |
+| `noEmail` | No | Boolean | Send no emails during the over-ride process **(test mode only)** |
+| `noScoreLimit` | No | Boolean | Assume that we can over-ride any observation **(test mode only)** |
+| `noTimeLimit` | No | Boolean | Assume that we can request an over-ride observation of any length **(test mode only)** |
+| `schedule` | Yes* | String | A string version of the CABB schedule |
+| `scheduleFile` | Yes* | String | The name of the file to read in as a CABB schedule |
+| `serverName` | No | String | The name of the webserver to use when sending the request to the web service |
+| `serverProtocol` | No | String | The protocol to use when sending the request to the web service |
+| `test` | No | Boolean | Set this to True to indicate that this is only a test request |
+| `usePreviousFrequencies` | No | Boolean | Should the service try and schedule using the frequencies that were being used at the start time? |
 
 ##### apiEndpoint
 
@@ -143,10 +143,29 @@ schedule can be appropriately shortened if required.
 
 *This is an optional property, and is only used for test requests.* (**Boolean**)
 
+If set to `True`, in test mode, then no emails will be sent by the service. This option is available
+so you can do testing without spamming yourself or members of your team.
 
+##### noScoreLimit
+
+*This is an optional property, and is only used for test requests.* (**Boolean**)
+
+If set to `True`, in test mode, the service will allow your project to over-ride any
+project, including Legacy projects. It will still not allow the project to over-ride
+maintenance, reconfigures, or CABB time, or if CABB is not in a suitable mode.
+
+##### noTimeLimit
+
+*This is an optional property, and is only used for test requests.* (**Boolean**)
+
+If set to `True`, in test mode, the service will ignore the amount of time available
+to your project when scheduling your over-ride.
 
 ##### schedule
 
-*This is a required property, although you may choose to
-specify `scheduleFile` instead.*
+*This is a required property, although you may choose to specify `scheduleFile` instead.* (**String**)
+
+This parameter needs to be filled with a string representation of your schedule file.
+This is easily achieved from the result of the `toString()` method of the
+[CABB Scheduler API](https://github.com/ste616/cabb-schedule-api).
 
