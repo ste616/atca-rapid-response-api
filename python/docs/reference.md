@@ -36,7 +36,7 @@ fully later on this page.
 | `email` | Yes | String | The email address of the requester |
 | `emailOnly` | No | String | Send all emails only to this email address **(test mode only)** |
 | `maximumLag` | No | Float | The maximum time, in hours, that the service will schedule the start time from now |
-| `maxTime` | No | Float | In testing mode, the maximum amount of time to allocate to this request, in hours |
+| `maxTime` | No | Float | The maximum amount of time to allocate to this request, in hours **(test mode only)** |
 | `minimumTime` | No | Float | The minimum amount of time required for this request to be useful, in hours |
 | `nameCalibrator` | Yes | String | The name of a calibrator that is associated with the primary target |
 | `nameTarget` | Yes | String | The name of the source that is the primary target of the request |
@@ -168,4 +168,49 @@ to your project when scheduling your over-ride.
 This parameter needs to be filled with a string representation of your schedule file.
 This is easily achieved from the result of the `toString()` method of the
 [CABB Scheduler API](https://github.com/ste616/cabb-schedule-api).
+
+##### scheduleFile
+
+*This is a required property, although you may choose to specify `schedule` instead.* (**String**)
+
+This parameter needs to be filled with the name of readable file that contains your
+CABB schedule. The library will read in the file, and automatically fill the
+`schedule` parameter with the string version of the schedule.
+
+##### serverName
+
+*This is an optional parameter, and we recommend you not specify it.* (**String**)
+
+This parameter specifies the name of the web server to send your over-ride request to.
+By default, this is set to the correct web server for the ATCA rapid response service,
+so there is no need to specify anything different.
+
+##### serverProtocol
+
+*This is an optional parameter, and we recommend you not specify it.* (**String**)
+
+This parameter specifies the protocol to use when sending your over-ride request.
+By default, this is set to `https://`, and we recommend that you leave this as is.
+
+##### test
+
+*This is an optional parameter.* (**Boolean**)
+
+If set to `True`, the request will treated as a test and will actually be able to
+be allocated any telescope time.
+
+##### usePreviousFrequencies
+
+*This is an optional parameter.* (**Boolean**)
+
+Although you must specify frequencies in your schedule, you can tell the service to
+replace those frequencies by those configured on the ATCA at the time your schedule
+starts. To do this, set this parameter to `True`. Your request is conditional though,
+as the service will not change your schedule's frequencies if:
+* the band configured at start time is either 7mm or 3mm (ie. the frequency is greater than
+30000 MHz),
+* the configuration at start time is split between any two bands,
+* the configuration is not deemed to be reliable, which occurs if the project C999 is
+currently observing, or was the last project that was observed.
+
 
