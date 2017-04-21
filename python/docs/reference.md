@@ -239,7 +239,7 @@ This dictionary has the following supported properties.
 This method returns the JSON from the service, although it is presented as a Python
 dictionary.
 
-The dictionary will have the following properties.
+The dictionary may have the following properties.
 
 | Property | Type | Description |
 | --- | --- | --- |
@@ -253,6 +253,39 @@ The dictionary will have the following properties.
 | `success` | Boolean | Whether the service has accepted this request and has found a way to schedule it. |
 | `testing` | Boolean | Details about which test-mode options the service has enabled. |
 | `testMode` | Boolean | Indicates whether the service is treating this as a test request. |
+
+##### authenticationToken
+
+This dictionary contains details about the authentication token you sent with your request.
+It has the following properties.
+
+| Property | Type | Description |
+| --- | --- | --- |
+| `received` | Boolean | Indicates whether the service received the authentication token. |
+| `verified` | Boolean | Indicates whether the authentication token was deemed to be valid for the request. |
+
+##### error
+
+If present, this string will contain a human-readable explanation for why the service
+was unable to grant your over-ride request.
+
+##### id
+
+This string uniquely identifies this request to use the rapid response system. It will
+be stated in every email regarding this request, and should be quoted if you want to
+discuss issues with observatory staff.
+
+##### observations
+
+This dictionary contains details about the observations you requested, and how the service
+has responded to them. It has the following properties.
+
+| Property | Type | Description |
+| --- | --- | --- |
+| `endDate` | String | The date the service estimates this observation will end. If no end date has been estimated, this will be `null`, otherwise it will have the format `yyyy-mm-dd HH:MM:SS` and will be in UTC. |
+| `hoursRequested` | Float | The service determines this length of time (in hours) by calculating how long it would take to execute the schedule file you passed in your request. |
+| `hoursRequestedMinimum` | Float | The service searched for a slot of at least this length (in hours) when looking for a start time. If you specified `minimumTime` when making the request, this should be that same value. |
+| `startDate` | String | The date the service has scheduled for this observation to start. If no start date has been allocated, this will be `null`, otherwise it will have the format `yyyy-mm-dd HH:MM:SS` and will be in UTC. |
 
 
 
