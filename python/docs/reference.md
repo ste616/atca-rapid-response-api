@@ -286,8 +286,65 @@ has responded to them. It has the following properties.
 | `hoursAllocated` | Float | The length of time (in hours) the service has allocated to your request, beginning at `startDate`. If no time has been allocated, this is `0`. If you are operating in test mode, and you have specified `maxTime`, this time should not be greater than that. |
 | `hoursRequested` | Float | The service determines this length of time (in hours) by calculating how long it would take to execute the schedule file you passed in your request. |
 | `hoursRequestedMinimum` | Float | The service searched for a slot of at least this length (in hours) when looking for a start time. If you specified `minimumTime` when making the request, this should be that same value. |
-| `projectHoursRemaining` | Float | The length of time (in hours) available for your project in the current semester, before allocating the time for this request. Because there is no guarantee that a scheduled over-ride can actually start and run the entire alloted duration, the time you requested will not be subtracted until the end of your over-ride. |
+| `projectHoursRemaining` | Float | The length of time (in hours) available for your project in the current semester, before allocating the time for this request. Because there is no guarantee that a scheduled over-ride can actually start and run the entire allotted duration, the time you requested will not be subtracted until the end of your over-ride. If you are operating in test mode, and you have set `noTimeLimit` to `True`, this number will not be useful. |
 | `startDate` | String | The date the service has scheduled for this observation to start. If no start date has been allocated, this will be `None`, otherwise it will have the format `yyyy-mm-dd HH:MM:SS` and will be in UTC. |
+
+##### overrideProject
+
+This dictionary contains details about the NAPA you have triggered, with respect to the
+over-ride process. It has the following properties.
+
+| Property | Type | Description |
+| --- | --- | --- |
+| `code` | String | The project code requested, as read from the schedule you supplied. |
+| `score` | Float | The TAC score of your NAPA. If you are operating in test mode, and you have set `noScoreLimit` to `True`, this will have the value `6`. |
+| `sufficientScore` | Boolean | Indicates whether your TAC score was sufficient to authorise an over-ride. |
+
+##### schedule
+
+This dictionary contains details about the schedule you passed to the service in your request.
+It has the following properties.
+
+| Property | Type | Description |
+| --- | --- | --- |
+| `altered` | String | A string representation of the schedule file that has been altered by the service, in order to add flux density calibration. If the request was not successful, no alteration of the schedule will have been done, and this will have the value `None`. |
+| `calibratorName` | String | This should be the same as the `nameCalibrator` parameter you passed in your request. |
+| `received` | Boolean | Indicates whether the service received a schedule file from your request. |
+| `targetName` | String | This should be the same as the `nameTarget` parameter you passed in your request. |
+| `useSameFrequencies` | Boolean | This should be the same as the `useSameFrequencies` parameter you passed in your request. |
+| `valid` | Boolean | Indicates whether the service considers the schedule it received to be valid for your NAPA. |
+
+##### scheduledProject
+
+This dictionary contains details about the projects your over-ride will displace, if
+it executes as expected. It has the following properties.
+
+| Property | Type | Description |
+| --- | --- | --- |
+| `codes` | List of Strings | Each element of this list is the project code of one of the displaced projects. If you do not need to over-ride anything other than director's discretionary time, this list will have length 0. |
+
+##### success
+
+A very simple `True` / `False` indication of whether your over-ride request has been allocated
+a start time on the telescope.
+
+##### testing
+
+This dictionary contains details about any testing parameters you specified, while operating
+in test mode. It has the following properties.
+
+| Property | Type | Description |
+| --- | --- | --- |
+| `limitTimeHours` | Float | This should have the same value as the `maxTime` you requested for your test request. If you didn't specify that in your request, this should have a value equivalent to the amount of time you have available as part of your NAPA. |
+| `noScoreLimit` | Boolean | This should be the same as the `noScoreLimit` parameter you passed in your test request. |
+| `noTimeLimit` | Boolean | This should be the same as the `noTimeLimit` parameter you passed in your test request. |
+
+##### testMode
+
+This is a Boolean indication of whether the service treated your request as a test only.
+
+
+
 
 
 
