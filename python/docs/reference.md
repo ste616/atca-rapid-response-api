@@ -282,10 +282,12 @@ has responded to them. It has the following properties.
 
 | Property | Type | Description |
 | --- | --- | --- |
-| `endDate` | String | The date the service estimates this observation will end. If no end date has been estimated, this will be `null`, otherwise it will have the format `yyyy-mm-dd HH:MM:SS` and will be in UTC. |
+| `endDate` | String | The date the service estimates this observation will end. If no end date has been estimated, this will be `None`, otherwise it will have the format `yyyy-mm-dd HH:MM:SS` and will be in UTC. |
+| `hoursAllocated` | Float | The length of time (in hours) the service has allocated to your request, beginning at `startDate`. If no time has been allocated, this is `0`. If you are operating in test mode, and you have specified `maxTime`, this time should not be greater than that. |
 | `hoursRequested` | Float | The service determines this length of time (in hours) by calculating how long it would take to execute the schedule file you passed in your request. |
 | `hoursRequestedMinimum` | Float | The service searched for a slot of at least this length (in hours) when looking for a start time. If you specified `minimumTime` when making the request, this should be that same value. |
-| `startDate` | String | The date the service has scheduled for this observation to start. If no start date has been allocated, this will be `null`, otherwise it will have the format `yyyy-mm-dd HH:MM:SS` and will be in UTC. |
+| `projectHoursRemaining` | Float | The length of time (in hours) available for your project in the current semester, before allocating the time for this request. Because there is no guarantee that a scheduled over-ride can actually start and run the entire alloted duration, the time you requested will not be subtracted until the end of your over-ride. |
+| `startDate` | String | The date the service has scheduled for this observation to start. If no start date has been allocated, this will be `None`, otherwise it will have the format `yyyy-mm-dd HH:MM:SS` and will be in UTC. |
 
 
 
