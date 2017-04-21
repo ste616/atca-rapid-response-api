@@ -239,6 +239,20 @@ This dictionary has the following supported properties.
 This method returns the JSON from the service, although it is presented as a Python
 dictionary.
 
+The dictionary will have the following properties.
+
+| Property | Type | Description |
+| --- | --- | --- |
+| `authenticationToken` | Dictionary | Details about the authentication token you sent. |
+| `error` | String | An indication of what error occurred. |
+| `id` | String | The unique identifier for this service request. |
+| `observations` | Dictionary | Details about the observations request and response. |
+| `overrideProject` | Dictionary | Details about the project you've just requested an over-ride for. |
+| `schedule` | Dictionary | Details about the schedule you submitted. |
+| `scheduledProject` | Dictionary | Details about the project(s) that will be affected by the over-ride. |
+| `success` | Boolean | Whether the service has accepted this request and has found a way to schedule it. |
+| `testing` | Boolean | Details about which test-mode options the service has enabled. |
+| `testMode` | Boolean | Indicates whether the service is treating this as a test request. |
 
 
 
