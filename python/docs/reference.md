@@ -213,4 +213,32 @@ as the service will not change your schedule's frequencies if:
 * the configuration is not deemed to be reliable, which occurs if the project C999 is
 currently observing, or was the last project that was observed.
 
+#### API methods
+
+The following methods are available on a successfully initialised `rapidRequest` object.
+
+| Method | Description |
+| --- | --- |
+| `send` | Send the request to the rapid response server, and optionally parse the return value |
+
+##### send
+
+**Arguments**
+
+This method accepts an optional dictionary, which controls how the method parses the
+return value from the service.
+
+This dictionary has the following supported properties.
+
+| Property | Required? | Type | Description |
+| --- | --- | --- | --- |
+| `printSummary` | No | Boolean | Make the method print to the screen a human-readable summary of the return value. |
+
+**Return Value**
+
+This method returns the JSON from the service, although it is presented as a Python
+dictionary.
+
+
+
 
