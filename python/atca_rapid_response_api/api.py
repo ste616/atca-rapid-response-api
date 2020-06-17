@@ -128,7 +128,7 @@ class api:
                 with open(self.authenticationTokenFile, 'r') as atf:
                     self.authenticationToken = atf.readlines()[0].rstrip()
             except IOError:
-                print "Unable to read authentication token file %s, aborting" % self.authenticationTokenFile
+                print ("Unable to read authentication token file %s, aborting" % self.authenticationTokenFile)
                 return None
         if self.authenticationToken is not None:
             data['authToken'] = self.authenticationToken
@@ -140,7 +140,7 @@ class api:
                 with open(self.scheduleFile, 'r') as sf:
                     self.schedule = sf.read()
             except IOError:
-                print "Unable to read schedule file %s, aborting" % self.scheduleFile
+                print ("Unable to read schedule file %s, aborting" % self.scheduleFile)
                 return None
         if self.schedule is not None:
             data['schedule'] = self.schedule
@@ -168,14 +168,14 @@ class api:
                 data['limitTimeHours'] = self.maxTime
         
         # Send the data.
-        print "sending the following data:"
-        print data
-        print " -- "
+        print ("sending the following data:")
+        print (data)
+        print (" -- ")
         url = self.serverProtocol + self.serverName + self.apiEndpoint
         postResponse = session.post( url=url, data=data, verify=False )
 
         # Parse the JSON that comes back.
-        print postResponse.text
+        print (postResponse.text)
         response = json.loads(postResponse.text)
         return response
     
@@ -199,23 +199,23 @@ class api:
             authToken = response['authenticationToken']
             if "received" in authToken and "verified" in authToken:
                 if options['printSummary'] == True:
-                    print "Authentication token:"
-                    print "            received: %r" % authToken['received']
-                    print "            verified: %r" % authToken['verified']
+                    print ("Authentication token:")
+                    print ("            received: %r" % authToken['received'])
+                    print ("            verified: %r" % authToken['verified'])
             else:
                 raise responseError("Malformed authentication token response.")
         else:
             raise responseError("Malformed response from server.")
 
-        print ""
+        print ("")
 
         if "schedule" in response:
             schedule = response['schedule']
             if "received" in schedule and "valid" in schedule and "altered" in schedule:
                 if options['printSummary'] == True:
-                    print "Schedule file:"
-                    print "     received: %r" % schedule['received']
-                    print "        valid: %r" % schedule['valid']
+                    print ("Schedule file:")
+                    print ("     received: %r" % schedule['received'])
+                    print ("        valid: %r" % schedule['valid'])
                 if schedule['altered'] is not None:
                     # Write out the schedule.
                     if self.scheduleFile is not None:
@@ -225,10 +225,10 @@ class api:
                                 of.write(outFile)
                         except IOError:
                             if options['printSummary'] == True:
-                                print "      altered: %r (unable to be written to %s)" % (True, outFile)
+                                print ("      altered: %r (unable to be written to %s)" % (True, outFile))
                         else:
                             if options['printSummary'] == True:
-                                print "      altered: %r (written to %s)" % (True, outFile)
+                                print ("      altered: %r (written to %s)" % (True, outFile))
                             response['schedule']['filename'] = outFile
                     
             else:
