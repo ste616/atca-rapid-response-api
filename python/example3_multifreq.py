@@ -111,7 +111,7 @@ except arrApi.responseError as r:
 
 # Write out the altered schedule to check what happened to it.
 asched = cabb.schedule()
-print ("%s" % response['schedule']['altered'])
+#print ("%s" % response['schedule']['altered'])
 asched.parse(response['schedule']['altered'])
 asched.write("example3_altered.sch")
 
