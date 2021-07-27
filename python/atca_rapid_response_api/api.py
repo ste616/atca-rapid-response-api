@@ -113,6 +113,10 @@ class api:
             self.maxTime = None
             if "maxTime" in options:
                 self.maxTime = options['maxTime']
+            # Test a particular CABB mode.
+            self.testCABBMode = None
+            if "testCABBMode" in options:
+                self.testCABBMode = options['testCABBMode']
             
     def __communications(self):
         # This session is how we communicate with the endpoint.
@@ -166,6 +170,8 @@ class api:
                 data['noEmail'] = self.noEmail
             if self.maxTime is not None:
                 data['limitTimeHours'] = self.maxTime
+            if self.testCABBMode is not None:
+                data['testCABBMode'] = self.testCABBMode
         
         # Send the data.
         print ("sending the following data:")
