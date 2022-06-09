@@ -28,17 +28,15 @@ class api:
     def __init__(self, options):
         # The schedule string, or a pointer to the file with the token.
         # This should come from the cabb_scheduler library.
-        self.schedule = None
-        self.scheduleFile = None
-        if "schedule" in options:
-            self.schedule = options['schedule']
-        elif "scheduleFile" in options:
-            self.scheduleFile = options['scheduleFile']
+        self.requestDict = None
+        self.requestString = None
+        if "requestDict" in options:
+            self.requestDict = options["requestDict"]
 
         # The location of the API endpoint.
         self.serverProtocol = "https://"
         self.serverName = "www.narrabri.atnf.csiro.au"
-        self.apiEndpoint = "/cgi-bin/obstools/rapid_response/rapid_response_service.py"
+        self.apiEndpoint = "/cgi-bin/obstools/rapid_response/rapid_response_service_dev.py"
         if "serverProtocol" in options:
             self.serverProtocol = options['serverProtocol']
         if "serverName" in options:
@@ -55,37 +53,17 @@ class api:
         elif "authenticationTokenFile" in options:
             self.authenticationTokenFile = options['authenticationTokenFile']
 
-        # The name of the main target in the schedule.
-        self.nameTarget = None
-        if "nameTarget" in options:
-            self.nameTarget = options['nameTarget']
-        # And the first calibrator for that target.
-        self.nameCalibrator = None
-        if "nameCalibrator" in options:
-            self.nameCalibrator = options['nameCalibrator']
-
         # The email address of the requester. This has to be an email address
         # that was supplied in the NAPA proposal.
         self.email = None
         if "email" in options:
             self.email = options['email']
 
-        # The minimum amount of time that we require on the schedule for the
-        # observation to be useful. This should be given in hours.
-        self.minimumTime = None
-        if "minimumTime" in options:
-            self.minimumTime = options['minimumTime']
         # And the maximum amount of time in the future we will allow the
         # start time to be, in hours.
         self.maximumLag = None
         if "maximumLag" in options:
             self.maximumLag = options['maximumLag']
-            
-        # We need to be able to tell the system that we want to use the
-        # frequencies of whatever project we over-ride.
-        self.usePreviousFrequencies = False
-        if "usePreviousFrequencies" in options:
-            self.usePreviousFrequencies = options['usePreviousFrequencies']
             
         # Some parameters relating to test mode.
         self.test = False
@@ -109,10 +87,6 @@ class api:
             self.noEmail = False
             if "noEmail" in options:
                 self.noEmail = options['noEmail']
-            # Limit the amount of time to test schedule shortening.
-            self.maxTime = None
-            if "maxTime" in options:
-                self.maxTime = options['maxTime']
             # Test a particular CABB mode.
             self.testCABBMode = None
             if "testCABBMode" in options:
@@ -137,24 +111,8 @@ class api:
         if self.authenticationToken is not None:
             data['authToken'] = self.authenticationToken
 
-        # Include the schedule.
-        if self.scheduleFile is not None:
-            # Read in the file.
-            try:
-                with open(self.scheduleFile, 'r') as sf:
-                    self.schedule = sf.read()
-            except IOError:
-                print ("Unable to read schedule file %s, aborting" % self.scheduleFile)
-                return None
-        if self.schedule is not None:
-            data['schedule'] = self.schedule
-        # Send some metadata about the schedule.
-        data['nameTarget'] = self.nameTarget
-        data['nameCalibrator'] = self.nameCalibrator
-        data['minimumTime'] = self.minimumTime
         if self.maximumLag is not None:
             data['maximumLag'] = self.maximumLag
-        data['usePreviousFrequencies'] = self.usePreviousFrequencies
         
         # The email of the requester.
         data['email'] = self.email
@@ -168,10 +126,14 @@ class api:
                 data['emailOnly'] = self.emailOnly
             if self.noEmail == True:
                 data['noEmail'] = self.noEmail
-            if self.maxTime is not None:
-                data['limitTimeHours'] = self.maxTime
             if self.testCABBMode is not None:
                 data['testCABBMode'] = self.testCABBMode
+
+        # Fill in all the dictionary stuff.
+        #for k in self.requestDict:
+        #    data[k] = self.requestDict[k]
+        if self.requestDict is not None:
+            data["request"] = json.dumps(self.requestDict)
         
         # Send the data.
         print ("sending the following data:")
@@ -214,33 +176,6 @@ class api:
             raise responseError("Malformed response from server.")
 
         print ("")
-
-        if "schedule" in response:
-            schedule = response['schedule']
-            if "received" in schedule and "valid" in schedule and "altered" in schedule:
-                if options['printSummary'] == True:
-                    print ("Schedule file:")
-                    print ("     received: %r" % schedule['received'])
-                    print ("        valid: %r" % schedule['valid'])
-                if schedule['altered'] is not None:
-                    # Write out the schedule.
-                    if self.scheduleFile is not None:
-                        outFile = "altered_" + self.scheduleFile
-                        try:
-                            with open(outFile, 'w') as of:
-                                of.write(outFile)
-                        except IOError:
-                            if options['printSummary'] == True:
-                                print ("      altered: %r (unable to be written to %s)" % (True, outFile))
-                        else:
-                            if options['printSummary'] == True:
-                                print ("      altered: %r (written to %s)" % (True, outFile))
-                            response['schedule']['filename'] = outFile
-                    
-            else:
-                raise responseError("Malformed schedule response.")
-        else:
-            raise responseError("Malformed response from server.")
 
         # We also just return the response object.
         return response
