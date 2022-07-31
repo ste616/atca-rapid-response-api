@@ -36,7 +36,7 @@ class api:
         # The location of the API endpoint.
         self.serverProtocol = "https://"
         self.serverName = "www.narrabri.atnf.csiro.au"
-        self.apiEndpoint = "/cgi-bin/obstools/rapid_response/rapid_response_service_dev.py"
+        self.apiEndpoint = "/cgi-bin/obstools/rapid_response/rapid_response_service.py"
         if "serverProtocol" in options:
             self.serverProtocol = options['serverProtocol']
         if "serverName" in options:
