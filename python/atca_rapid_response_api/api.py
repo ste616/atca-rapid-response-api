@@ -3,6 +3,7 @@
 # Jamie.Stevens@csiro.au
 
 from requests import Session
+from requests.auth import HTTPBasicAuth
 import requests
 requests.packages.urllib3.disable_warnings()
 import json
@@ -43,6 +44,19 @@ class api:
             self.serverName = options['serverName']
         if "apiEndpoint" in options:
             self.apiEndpoint = options['apiEndpoint']
+        # From outside the CSIRO network, we need to do basic HTTP authentication
+        # to access the endpoint.
+        self.requiresHttpAuth = True
+        if "requiresHttpAuth" in options:
+            self.requiresHttpAuth = options['requiresHttpAuth']
+        # The username and password for the authentication should be supplied.
+        self.httpAuthUsername = ""
+        self.httpAuthPassword = ""
+        if "httpAuthUsername" in options:
+            self.httpAuthUsername = options['httpAuthUsername']
+        if "httpAuthPassword" in options:
+            self.httpAuthPassword = options['httpAuthPassword']
+        
         
         # The authentication token we were provided with, or a pointer to the
         # file with the token.
@@ -99,6 +113,14 @@ class api:
         # This is the data we send to the endpoint.
         data = {}
 
+        # Check if we need to do authentication.
+        basic = None
+        if self.requiresHttpAuth:
+            if len(self.httpAuthUsername) < 6 and len(self.httpAuthPassword) < 8:
+                print("HTTP authentication details required but not supplied")
+                return None
+            basic = HTTPBasicAuth(self.httpAuthUsername, self.httpAuthPassword)
+
         # Include the authentication token.
         if self.authenticationTokenFile is not None:
             # Read in the file.
@@ -140,11 +162,15 @@ class api:
         print (data)
         print (" -- ")
         url = self.serverProtocol + self.serverName + self.apiEndpoint
-        postResponse = session.post( url=url, data=data, verify=False )
+        postResponse = session.post( url=url, data=data, verify=False, auth=basic )
 
         # Parse the JSON that comes back.
         print (postResponse.text)
-        response = json.loads(postResponse.text)
+        try:
+            response = json.loads(postResponse.text)
+        except json.decoder.JSONDecodeError as e:
+            print("Authentication with web service has failed, please check credentials.")
+            return None
         return response
     
     def send(self, options={}):

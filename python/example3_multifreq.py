@@ -25,9 +25,12 @@ rq["15mm"] = { "use": True, "exposureLength": "00:30:00", "freq1": 17000, "freq2
 rapidObj = { 'requestDict': rq }
 # The authentication token needs to go with it, and we point to the file that
 # contains the token.
-rapidObj['authenticationTokenFile'] = "authorisation_token_test_C007_2022APR.jwt"
+rapidObj['authenticationTokenFile'] = "authorisation_token_test_C007_2023OCT.jwt"
 # The email address of the requester needs to be there.
 rapidObj['email'] = "Jamie.Stevens@csiro.au"
+# Our authentication details.
+rapidObj['httpAuthUsername'] = "usr123"
+rapidObj['httpAuthPassword'] = "thisisapassword"
 
 # Because this is a test run, we'll specify a few parameters to just try things out.
 rapidObj['test'] = True
